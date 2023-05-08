@@ -10,7 +10,6 @@ from django.conf import settings
 import uuid
 
 
-# Instructor model
 class Instructor(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -23,7 +22,6 @@ class Instructor(models.Model):
         return self.user.username
 
 
-# Learner model
 class Learner(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -52,7 +50,6 @@ class Learner(models.Model):
                self.occupation
 
 
-# Course model
 class Course(models.Model):
     name = models.CharField(null=False, max_length=30, default='online course')
     image = models.ImageField(upload_to='course_images/')
@@ -68,7 +65,6 @@ class Course(models.Model):
                "Description: " + self.description
 
 
-# Lesson model
 class Lesson(models.Model):
     title = models.CharField(max_length=200, default="title")
     order = models.IntegerField(default=0)
@@ -96,7 +92,7 @@ class Enrollment(models.Model):
 
 
 class Question(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='quiestons')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='questions')
     text = models.TextField()
     grade = models.PositiveSmallIntegerField()
 
@@ -110,6 +106,7 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     text = models.TextField()
     is_correct = models.BooleanField(default=False)
+
 
 class Submission(models.Model):
     enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
